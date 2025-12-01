@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Admin {
+  id          String   @id @default(uuid())
+  username    String   @unique
+  password    String
+  phoneNumber Int      @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Seller {
+  id          String    @id @default(uuid())
+  email       String    @unique
+  name        String
+  password    String
+  phoneNumber Int       @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[]
+}
+
+model Customer {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  name          String
+  password      String
+  phoneNumber   Int       @unique
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  products      Product[]
+  likedProducts Product[] @relation("LikedProducts")
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  price       Float
+  quantity    Int
+  imageUrl    String
+  category    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  seller   Seller? @relation(fields: [sellerId], references: [id])
+  sellerId String?
+
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  customerId String?
+
+  likedBy    Customer[] @relation("LikedProducts")
+}
