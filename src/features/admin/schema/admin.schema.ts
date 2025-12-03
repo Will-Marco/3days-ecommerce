@@ -18,3 +18,21 @@ export const AdminLoginFormSchema = z.object({
       message: "Password eng ko'pida 16ta belgidan iborat bo'lishi kerak",
     }),
 });
+
+
+export const AdminRegisterSchema = z
+  .object({
+    username: z.string().min(3, 'Username must be at least 3 characters'),
+    password: z.string().min(6, 'Password must be at least 6 characters'),
+    confirmPassword: z.string(),
+    phone_number: z
+      .string()
+      .regex(
+        /^\+998\d{9}$/,
+        'Phone number must be in the format +998XXXXXXXXX'
+      ),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
