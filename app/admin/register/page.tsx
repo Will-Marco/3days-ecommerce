@@ -2,10 +2,12 @@
 
 import CustomInput from '@/components/common/customInput';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { ADMIN_API_ROUTES } from '@/src/features/admin/constants';
 import { AdminRegisterSchema } from '@/src/features/admin/schema/admin.schema';
 import { IAdminRegisterTypes } from '@/src/features/admin/types/admin.types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import axios from 'axios';
 
 export default function AdminRegister() {
   const {
@@ -22,8 +24,14 @@ export default function AdminRegister() {
     },
   });
 
-  const onSubmit: SubmitHandler<IAdminRegisterTypes> = (data) => {
-    console.log('Register data: ', data);
+  const onSubmit: SubmitHandler<IAdminRegisterTypes> = async (data) => {
+    try {
+      const response = await axios.post(ADMIN_API_ROUTES.REGISTER, data);
+      
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

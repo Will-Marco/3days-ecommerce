@@ -1,9 +1,11 @@
 'use client';
 import CustomInput from '@/components/common/customInput';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { ADMIN_API_ROUTES } from '@/src/features/admin/constants';
 import { AdminLoginFormSchema } from '@/src/features/admin/schema/admin.schema';
 import { IAdminLoginTypes } from '@/src/features/admin/types/admin.types';
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -19,8 +21,13 @@ export default function AdminLogin() {
       password: '',
     },
   });
-  const onSubmit: SubmitHandler<IAdminLoginTypes> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IAdminLoginTypes> = async (data) => {
+    try {
+      const response = await axios.post(ADMIN_API_ROUTES.REGISTER, data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -39,7 +46,7 @@ export default function AdminLogin() {
               register={register}
               type="text"
               label="Username"
-              name='username'
+              name="username"
             />
 
             <CustomInput
@@ -47,7 +54,7 @@ export default function AdminLogin() {
               register={register}
               type="password"
               label="Password"
-              name='password'
+              name="password"
             />
 
             <button
