@@ -20,25 +20,15 @@ export type AdminModel = runtime.Types.Result.DefaultSelection<Prisma.$AdminPayl
 
 export type AggregateAdmin = {
   _count: AdminCountAggregateOutputType | null
-  _avg: AdminAvgAggregateOutputType | null
-  _sum: AdminSumAggregateOutputType | null
   _min: AdminMinAggregateOutputType | null
   _max: AdminMaxAggregateOutputType | null
-}
-
-export type AdminAvgAggregateOutputType = {
-  phoneNumber: number | null
-}
-
-export type AdminSumAggregateOutputType = {
-  phoneNumber: number | null
 }
 
 export type AdminMinAggregateOutputType = {
   id: string | null
   username: string | null
   password: string | null
-  phoneNumber: number | null
+  phoneNumber: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -47,7 +37,7 @@ export type AdminMaxAggregateOutputType = {
   id: string | null
   username: string | null
   password: string | null
-  phoneNumber: number | null
+  phoneNumber: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,14 +52,6 @@ export type AdminCountAggregateOutputType = {
   _all: number
 }
 
-
-export type AdminAvgAggregateInputType = {
-  phoneNumber?: true
-}
-
-export type AdminSumAggregateInputType = {
-  phoneNumber?: true
-}
 
 export type AdminMinAggregateInputType = {
   id?: true
@@ -137,18 +119,6 @@ export type AdminAggregateArgs<ExtArgs extends runtime.Types.Extensions.Internal
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: AdminAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: AdminSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: AdminMinAggregateInputType
@@ -179,8 +149,6 @@ export type AdminGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   _count?: AdminCountAggregateInputType | true
-  _avg?: AdminAvgAggregateInputType
-  _sum?: AdminSumAggregateInputType
   _min?: AdminMinAggregateInputType
   _max?: AdminMaxAggregateInputType
 }
@@ -189,12 +157,10 @@ export type AdminGroupByOutputType = {
   id: string
   username: string
   password: string
-  phoneNumber: number
+  phoneNumber: string
   createdAt: Date
   updatedAt: Date
   _count: AdminCountAggregateOutputType | null
-  _avg: AdminAvgAggregateOutputType | null
-  _sum: AdminSumAggregateOutputType | null
   _min: AdminMinAggregateOutputType | null
   _max: AdminMaxAggregateOutputType | null
 }
@@ -221,7 +187,7 @@ export type AdminWhereInput = {
   id?: Prisma.StringFilter<"Admin"> | string
   username?: Prisma.StringFilter<"Admin"> | string
   password?: Prisma.StringFilter<"Admin"> | string
-  phoneNumber?: Prisma.IntFilter<"Admin"> | number
+  phoneNumber?: Prisma.StringFilter<"Admin"> | string
   createdAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
 }
@@ -238,7 +204,7 @@ export type AdminOrderByWithRelationInput = {
 export type AdminWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   username?: string
-  phoneNumber?: number
+  phoneNumber?: string
   AND?: Prisma.AdminWhereInput | Prisma.AdminWhereInput[]
   OR?: Prisma.AdminWhereInput[]
   NOT?: Prisma.AdminWhereInput | Prisma.AdminWhereInput[]
@@ -255,10 +221,8 @@ export type AdminOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AdminCountOrderByAggregateInput
-  _avg?: Prisma.AdminAvgOrderByAggregateInput
   _max?: Prisma.AdminMaxOrderByAggregateInput
   _min?: Prisma.AdminMinOrderByAggregateInput
-  _sum?: Prisma.AdminSumOrderByAggregateInput
 }
 
 export type AdminScalarWhereWithAggregatesInput = {
@@ -268,7 +232,7 @@ export type AdminScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Admin"> | string
   username?: Prisma.StringWithAggregatesFilter<"Admin"> | string
   password?: Prisma.StringWithAggregatesFilter<"Admin"> | string
-  phoneNumber?: Prisma.IntWithAggregatesFilter<"Admin"> | number
+  phoneNumber?: Prisma.StringWithAggregatesFilter<"Admin"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Admin"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Admin"> | Date | string
 }
@@ -277,7 +241,7 @@ export type AdminCreateInput = {
   id?: string
   username: string
   password: string
-  phoneNumber: number
+  phoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -286,7 +250,7 @@ export type AdminUncheckedCreateInput = {
   id?: string
   username: string
   password: string
-  phoneNumber: number
+  phoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -295,7 +259,7 @@ export type AdminUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -304,7 +268,7 @@ export type AdminUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -313,7 +277,7 @@ export type AdminCreateManyInput = {
   id?: string
   username: string
   password: string
-  phoneNumber: number
+  phoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -322,7 +286,7 @@ export type AdminUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -331,7 +295,7 @@ export type AdminUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -343,10 +307,6 @@ export type AdminCountOrderByAggregateInput = {
   phoneNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type AdminAvgOrderByAggregateInput = {
-  phoneNumber?: Prisma.SortOrder
 }
 
 export type AdminMaxOrderByAggregateInput = {
@@ -367,20 +327,8 @@ export type AdminMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type AdminSumOrderByAggregateInput = {
-  phoneNumber?: Prisma.SortOrder
-}
-
 export type StringFieldUpdateOperationsInput = {
   set?: string
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -434,7 +382,7 @@ export type $AdminPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: string
     username: string
     password: string
-    phoneNumber: number
+    phoneNumber: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["admin"]>
@@ -863,7 +811,7 @@ export interface AdminFieldRefs {
   readonly id: Prisma.FieldRef<"Admin", 'String'>
   readonly username: Prisma.FieldRef<"Admin", 'String'>
   readonly password: Prisma.FieldRef<"Admin", 'String'>
-  readonly phoneNumber: Prisma.FieldRef<"Admin", 'Int'>
+  readonly phoneNumber: Prisma.FieldRef<"Admin", 'String'>
   readonly createdAt: Prisma.FieldRef<"Admin", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Admin", 'DateTime'>
 }

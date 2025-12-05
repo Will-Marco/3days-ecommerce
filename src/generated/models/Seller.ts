@@ -405,6 +405,14 @@ export type SellerNullableScalarRelationFilter = {
   isNot?: Prisma.SellerWhereInput | null
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type SellerCreateNestedOneWithoutProductsInput = {
   create?: Prisma.XOR<Prisma.SellerCreateWithoutProductsInput, Prisma.SellerUncheckedCreateWithoutProductsInput>
   connectOrCreate?: Prisma.SellerCreateOrConnectWithoutProductsInput

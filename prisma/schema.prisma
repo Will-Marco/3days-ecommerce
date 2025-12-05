@@ -11,7 +11,7 @@ model Admin {
   id          String   @id @default(uuid())
   username    String   @unique
   password    String
-  phoneNumber Int      @unique
+  phoneNumber String   @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -56,5 +56,5 @@ model Product {
   customer   Customer? @relation(fields: [customerId], references: [id])
   customerId String?
 
-  likedBy    Customer[] @relation("LikedProducts")
+  likedBy Customer[] @relation("LikedProducts")
 }
