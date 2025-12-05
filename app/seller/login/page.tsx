@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import CustomInput from "@/components/common/customInput";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { SELLER_API_ROUTES } from "@/src/features/seller/constants";
@@ -9,10 +11,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
+import { useSellerAuth } from "@/src/contexts/SellerAuthContext";
 
 export default function SellerLogin() {
+  const router = useRouter();
+  const { seller, setSeller, isAuthenticated } = useSellerAuth();
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/seller/dashboard");
+    }
+  }, [isAuthenticated, router]);
 
   const {
     register,
@@ -32,16 +44,23 @@ export default function SellerLogin() {
       setSuccess("");
       const response = await axios.post(SELLER_API_ROUTES.LOGIN, data);
 
+      const sellerData = response.data.seller;
+
+      // Save seller data to localStorage via context
+      setSeller({
+        id: sellerData.id,
+        email: sellerData.email,
+        name: sellerData.name,
+      });
+
       setSuccess(response.data.message || "Login successful");
-      console.log("Seller data:", response.data.seller);
-      
-      // Here you can redirect or store the seller data
-      // For example: router.push('/seller/dashboard');
-      setTimeout(() => setSuccess(""), 3000);
+
+      // Redirect to dashboard after successful login
+      setTimeout(() => {
+        router.push("/seller/dashboard");
+      }, 500);
     } catch (error: any) {
-      setError(
-        error.response?.data?.error || "Failed to login"
-      );
+      setError(error.response?.data?.error || "Failed to login");
       console.error("Login error:", error);
     }
   };
@@ -99,4 +118,3 @@ export default function SellerLogin() {
     </div>
   );
 }
-

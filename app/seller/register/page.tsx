@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import CustomInput from "@/components/common/customInput";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { SELLER_API_ROUTES } from "@/src/features/seller/constants";
@@ -9,10 +11,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
+import { useSellerAuth } from "@/src/contexts/SellerAuthContext";
 
 export default function SellerRegister() {
+  const router = useRouter();
+  const { setSeller, isAuthenticated } = useSellerAuth();
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/seller/dashboard");
+    }
+  }, [isAuthenticated, router]);
 
   const {
     register,
@@ -36,9 +48,22 @@ export default function SellerRegister() {
       setSuccess("");
       const response = await axios.post(SELLER_API_ROUTES.REGISTER, data);
 
+      const sellerData = response.data.seller;
+      
+      // Save seller data to localStorage via context
+      setSeller({
+        id: sellerData.id,
+        email: sellerData.email,
+        name: sellerData.name,
+      });
+
       setSuccess(response.data.message || "Seller registered successfully");
       reset();
-      setTimeout(() => setSuccess(""), 3000);
+      
+      // Redirect to dashboard after successful registration
+      setTimeout(() => {
+        router.push("/seller/dashboard");
+      }, 500);
     } catch (error: any) {
       setError(
         error.response?.data?.error || "Failed to register seller"

@@ -18,11 +18,10 @@ import {
   IProductUpdateTypes,
 } from "@/src/features/product/types/product.types";
 import { Plus, Edit2, Trash2, X } from "lucide-react";
-
-// TODO: This should come from authentication context
-const SELLER_ID = "your-seller-id-here"; // Replace with actual seller ID from auth
+import { useSellerAuth } from "@/src/contexts/SellerAuthContext";
 
 export default function SellerProducts() {
+  const { seller } = useSellerAuth();
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -39,6 +38,7 @@ export default function SellerProducts() {
     handleSubmit: handleSubmitCreate,
     formState: { errors: errorsCreate },
     reset: resetCreate,
+    setValue: setValueCreate,
   } = useForm<IProductCreateTypes>({
     resolver: zodResolver(ProductCreateSchema),
     defaultValues: {
@@ -48,9 +48,16 @@ export default function SellerProducts() {
       quantity: 0,
       imageUrl: "",
       category: "",
-      sellerId: SELLER_ID,
+      sellerId: seller?.id || "",
     },
   });
+
+  // Update sellerId when seller changes
+  useEffect(() => {
+    if (seller?.id) {
+      setValueCreate("sellerId", seller.id);
+    }
+  }, [seller?.id, setValueCreate]);
 
   const {
     register: registerUpdate,
@@ -63,10 +70,12 @@ export default function SellerProducts() {
 
   // Fetch seller's products
   const fetchProducts = async () => {
+    if (!seller?.id) return;
+    
     try {
       setLoading(true);
       const response = await axios.get(
-        PRODUCT_API_ROUTES.BY_SELLER(SELLER_ID)
+        PRODUCT_API_ROUTES.BY_SELLER(seller.id)
       );
       setProducts(response.data.products || []);
       setError("");
@@ -81,11 +90,18 @@ export default function SellerProducts() {
   };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    if (seller?.id) {
+      fetchProducts();
+    }
+  }, [seller?.id]);
 
   // Create product
   const onCreateSubmit: SubmitHandler<IProductCreateTypes> = async (data) => {
+    if (!seller?.id) {
+      setError("Seller not authenticated");
+      return;
+    }
+
     try {
       setError("");
       setSuccess("");
@@ -93,7 +109,7 @@ export default function SellerProducts() {
         ...data,
         price: typeof data.price === "string" ? parseFloat(data.price) : data.price,
         quantity: typeof data.quantity === "string" ? parseInt(data.quantity, 10) : data.quantity,
-        sellerId: SELLER_ID,
+        sellerId: seller.id,
       };
       const response = await axios.post(
         PRODUCT_API_ROUTES.BASE,
@@ -373,18 +389,22 @@ export default function SellerProducts() {
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
+                  <span className="text-gray-300">
+                    Price
+                  </span>
                   <CustomInput
                     errors={errorsCreate}
                     register={registerCreate}
-                    type="text"
+                    type="number"
                     label="Price"
                     name="price"
                     placeholder="0.00"
                   />
+                  <span className="text-gray-300">Quantity</span>
                   <CustomInput
                     errors={errorsCreate}
                     register={registerCreate}
-                    type="text"
+                    type="number"
                     label="Quantity"
                     name="quantity"
                     placeholder="0"
