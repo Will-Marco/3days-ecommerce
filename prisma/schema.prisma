@@ -21,7 +21,7 @@ model Seller {
   email       String    @unique
   name        String
   password    String
-  phoneNumber Int       @unique
+  phoneNumber String       @unique
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   products    Product[]

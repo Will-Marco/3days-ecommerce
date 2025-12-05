@@ -422,6 +422,14 @@ export type CustomerOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type CustomerCreateNestedOneWithoutProductsInput = {
   create?: Prisma.XOR<Prisma.CustomerCreateWithoutProductsInput, Prisma.CustomerUncheckedCreateWithoutProductsInput>
   connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutProductsInput

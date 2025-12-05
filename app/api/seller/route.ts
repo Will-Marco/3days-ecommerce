@@ -68,7 +68,7 @@ export async function POST(req: Request) {
 
     // Check if phone number already exists
     const existingPhoneNumber = await prisma.seller.findUnique({
-      where: { phoneNumber: phoneNumberInt },
+      where: { phoneNumber: `+${phoneNumberInt}` },
     });
 
     if (existingPhoneNumber) {
@@ -85,7 +85,7 @@ export async function POST(req: Request) {
         email,
         name,
         password: hashedPassword,
-        phoneNumber: phoneNumberInt,
+        phoneNumber: `+${phoneNumberInt}`,
       },
     });
 

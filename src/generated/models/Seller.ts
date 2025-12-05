@@ -20,18 +20,8 @@ export type SellerModel = runtime.Types.Result.DefaultSelection<Prisma.$SellerPa
 
 export type AggregateSeller = {
   _count: SellerCountAggregateOutputType | null
-  _avg: SellerAvgAggregateOutputType | null
-  _sum: SellerSumAggregateOutputType | null
   _min: SellerMinAggregateOutputType | null
   _max: SellerMaxAggregateOutputType | null
-}
-
-export type SellerAvgAggregateOutputType = {
-  phoneNumber: number | null
-}
-
-export type SellerSumAggregateOutputType = {
-  phoneNumber: number | null
 }
 
 export type SellerMinAggregateOutputType = {
@@ -39,7 +29,7 @@ export type SellerMinAggregateOutputType = {
   email: string | null
   name: string | null
   password: string | null
-  phoneNumber: number | null
+  phoneNumber: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -49,7 +39,7 @@ export type SellerMaxAggregateOutputType = {
   email: string | null
   name: string | null
   password: string | null
-  phoneNumber: number | null
+  phoneNumber: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,14 +55,6 @@ export type SellerCountAggregateOutputType = {
   _all: number
 }
 
-
-export type SellerAvgAggregateInputType = {
-  phoneNumber?: true
-}
-
-export type SellerSumAggregateInputType = {
-  phoneNumber?: true
-}
 
 export type SellerMinAggregateInputType = {
   id?: true
@@ -143,18 +125,6 @@ export type SellerAggregateArgs<ExtArgs extends runtime.Types.Extensions.Interna
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: SellerAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: SellerSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: SellerMinAggregateInputType
@@ -185,8 +155,6 @@ export type SellerGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   _count?: SellerCountAggregateInputType | true
-  _avg?: SellerAvgAggregateInputType
-  _sum?: SellerSumAggregateInputType
   _min?: SellerMinAggregateInputType
   _max?: SellerMaxAggregateInputType
 }
@@ -196,12 +164,10 @@ export type SellerGroupByOutputType = {
   email: string
   name: string
   password: string
-  phoneNumber: number
+  phoneNumber: string
   createdAt: Date
   updatedAt: Date
   _count: SellerCountAggregateOutputType | null
-  _avg: SellerAvgAggregateOutputType | null
-  _sum: SellerSumAggregateOutputType | null
   _min: SellerMinAggregateOutputType | null
   _max: SellerMaxAggregateOutputType | null
 }
@@ -229,7 +195,7 @@ export type SellerWhereInput = {
   email?: Prisma.StringFilter<"Seller"> | string
   name?: Prisma.StringFilter<"Seller"> | string
   password?: Prisma.StringFilter<"Seller"> | string
-  phoneNumber?: Prisma.IntFilter<"Seller"> | number
+  phoneNumber?: Prisma.StringFilter<"Seller"> | string
   createdAt?: Prisma.DateTimeFilter<"Seller"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Seller"> | Date | string
   products?: Prisma.ProductListRelationFilter
@@ -249,7 +215,7 @@ export type SellerOrderByWithRelationInput = {
 export type SellerWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
-  phoneNumber?: number
+  phoneNumber?: string
   AND?: Prisma.SellerWhereInput | Prisma.SellerWhereInput[]
   OR?: Prisma.SellerWhereInput[]
   NOT?: Prisma.SellerWhereInput | Prisma.SellerWhereInput[]
@@ -269,10 +235,8 @@ export type SellerOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SellerCountOrderByAggregateInput
-  _avg?: Prisma.SellerAvgOrderByAggregateInput
   _max?: Prisma.SellerMaxOrderByAggregateInput
   _min?: Prisma.SellerMinOrderByAggregateInput
-  _sum?: Prisma.SellerSumOrderByAggregateInput
 }
 
 export type SellerScalarWhereWithAggregatesInput = {
@@ -283,7 +247,7 @@ export type SellerScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"Seller"> | string
   name?: Prisma.StringWithAggregatesFilter<"Seller"> | string
   password?: Prisma.StringWithAggregatesFilter<"Seller"> | string
-  phoneNumber?: Prisma.IntWithAggregatesFilter<"Seller"> | number
+  phoneNumber?: Prisma.StringWithAggregatesFilter<"Seller"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Seller"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Seller"> | Date | string
 }
@@ -293,7 +257,7 @@ export type SellerCreateInput = {
   email: string
   name: string
   password: string
-  phoneNumber: number
+  phoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductCreateNestedManyWithoutSellerInput
@@ -304,7 +268,7 @@ export type SellerUncheckedCreateInput = {
   email: string
   name: string
   password: string
-  phoneNumber: number
+  phoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutSellerInput
@@ -315,7 +279,7 @@ export type SellerUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUpdateManyWithoutSellerNestedInput
@@ -326,7 +290,7 @@ export type SellerUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutSellerNestedInput
@@ -337,7 +301,7 @@ export type SellerCreateManyInput = {
   email: string
   name: string
   password: string
-  phoneNumber: number
+  phoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -347,7 +311,7 @@ export type SellerUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -357,7 +321,7 @@ export type SellerUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -370,10 +334,6 @@ export type SellerCountOrderByAggregateInput = {
   phoneNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type SellerAvgOrderByAggregateInput = {
-  phoneNumber?: Prisma.SortOrder
 }
 
 export type SellerMaxOrderByAggregateInput = {
@@ -396,21 +356,9 @@ export type SellerMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type SellerSumOrderByAggregateInput = {
-  phoneNumber?: Prisma.SortOrder
-}
-
 export type SellerNullableScalarRelationFilter = {
   is?: Prisma.SellerWhereInput | null
   isNot?: Prisma.SellerWhereInput | null
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type SellerCreateNestedOneWithoutProductsInput = {
@@ -434,7 +382,7 @@ export type SellerCreateWithoutProductsInput = {
   email: string
   name: string
   password: string
-  phoneNumber: number
+  phoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -444,7 +392,7 @@ export type SellerUncheckedCreateWithoutProductsInput = {
   email: string
   name: string
   password: string
-  phoneNumber: number
+  phoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -470,7 +418,7 @@ export type SellerUpdateWithoutProductsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -480,7 +428,7 @@ export type SellerUncheckedUpdateWithoutProductsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -576,7 +524,7 @@ export type $SellerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     email: string
     name: string
     password: string
-    phoneNumber: number
+    phoneNumber: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["seller"]>
@@ -1007,7 +955,7 @@ export interface SellerFieldRefs {
   readonly email: Prisma.FieldRef<"Seller", 'String'>
   readonly name: Prisma.FieldRef<"Seller", 'String'>
   readonly password: Prisma.FieldRef<"Seller", 'String'>
-  readonly phoneNumber: Prisma.FieldRef<"Seller", 'Int'>
+  readonly phoneNumber: Prisma.FieldRef<"Seller", 'String'>
   readonly createdAt: Prisma.FieldRef<"Seller", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Seller", 'DateTime'>
 }
