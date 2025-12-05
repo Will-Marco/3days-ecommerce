@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const AdminLoginFormSchema = z.object({
   username: z
@@ -19,20 +19,34 @@ export const AdminLoginFormSchema = z.object({
     }),
 });
 
-
 export const AdminRegisterSchema = z
   .object({
-    username: z.string().min(3, 'Username must be at least 3 characters'),
-    password: z.string().min(6, 'Password must be at least 6 characters'),
+    username: z.string().min(3, "Username must be at least 3 characters"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
     confirmPassword: z.string(),
     phone_number: z
       .string()
       .regex(
         /^\+998\d{9}$/,
-        'Phone number must be in the format +998XXXXXXXXX'
+        "Phone number must be in the format +998XXXXXXXXX"
       ),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
-    path: ['confirmPassword'],
+    path: ["confirmPassword"],
   });
+
+export const AdminUpdateSchema = z.object({
+  username: z
+    .string()
+    .min(3, "Username must be at least 3 characters")
+    .optional(),
+  phoneNumber: z
+    .string()
+    .regex(/^\+998\d{9}$/, "Phone number must be in the format +998XXXXXXXXX")
+    .optional(),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .optional(),
+});
